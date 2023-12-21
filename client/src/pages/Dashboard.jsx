@@ -2,12 +2,24 @@ import React, { createContext, useContext, useState } from 'react'
 import { Outlet, redirect, useLoaderData, useNavigate } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import customFetch from '../utils/customFetch';
+import { useQuery } from '@tanstack/react-query';
+import { toast } from 'react-toastify';
+import { LeaderBoardRow } from '../components';
 
-export const loader = async () => {
+const statsQuery = {
+    queryKey: ['stats'],
+    queryFn: async () => {
+        const fullLeaderboardData = await customFetch.get('leaderboard/get-leaderboard');
+        const topTenLeaderboard = await customFetch.get('leaderboard/get-leaderboard?limit=10')
+        const { data } = await customFetch.get('users/current-user');
+        return { currentUser: data.user, leaderboard: fullLeaderboardData.data.leaderboard, topTen: topTenLeaderboard.data.leaderboard };
+    },
+};
+
+export const loader = (queryClient) => async () => {
     try {
-        const leaderboardData = await customFetch.get('leaderboard/get-leaderboard');
-        const { data } = await customFetch.get('users/current-user')
-        return { currentUser: data.user, leaderboard: leaderboardData.data.leaderboard }
+        const data = await queryClient.ensureQueryData(statsQuery);
+        return null;
     } catch (error) {
         return redirect('/')
     }
@@ -15,17 +27,22 @@ export const loader = async () => {
 
 const DashboardContext = createContext();
 
-const Dashboard = () => {
+const Dashboard = ({ queryClient }) => {
     const navigate = useNavigate();
-    const { currentUser } = useLoaderData();
-    const { leaderboard } = useLoaderData();
-    const [user, setUser] = useState(currentUser)
-    const [fullLeaderboard, setFullLeaderboard] = useState(leaderboard)
-    const [userLookup, setUserLookup] = useState(currentUser)
+    const { data } = useQuery(statsQuery);
+    const user = data.currentUser;
+    const { topTen } = data;
+    const { leaderboard } = data;
+    //const [user, setUser] = useState(currentUser)
+    const [fullLeaderboard, setFullLeaderboard] = useState(leaderboard);
+    // const [topTen, setTopTen] = ([])
+    const [userLookup, setUserLookup] = useState(user)
 
     const logoutUser = async () => {
-        navigate('/')
-        await customFetch.get('/auth/logout')
+        navigate('/');
+        await customFetch.get('/auth/logout');
+        queryClient.invalidateQueries();
+        toast.success('logging out...');
     }
 
     const convertTime = (time) => {
@@ -39,19 +56,20 @@ const Dashboard = () => {
 
     const getFullLeaderboard = async () => {
         try {
-            const currentUser = await customFetch.get('users/current-user')
-            const { data } = await customFetch.get('leaderboard/get-leaderboard?limit=10')
-            setFullLeaderboard(data.leaderboard)
-            setUser(currentUser.data.user)
+            queryClient.invalidateQueries();
+            topTenRows = topTen.map((user, index) => {
+                return <LeaderBoardRow key={user._id} rank={index + 1} avatar={user.avatar} username={user.username} location={user.location} time={user.time} rolls={user.rolls} />
+            })
         } catch (error) {
             console.log(error);
             return error
         }
     }
 
-    const updateUser = (updatedUser) => {
-        setUser(updateUser)
-    }
+    let topTenRows = topTen.map((user, index) => {
+        console.log(user.avatar);
+        return <LeaderBoardRow key={user._id} rank={index + 1} avatar={user.avatar} username={user.username} location={user.location} time={user.time} rolls={user.rolls} />
+    })
 
     const convertDate = (date) => {
         const newDate = new Date(date);
@@ -63,7 +81,7 @@ const Dashboard = () => {
 
 
     return (
-        <DashboardContext.Provider value={{ user, setUser, userLookup, setUserLookup, fullLeaderboard, getFullLeaderboard, setFullLeaderboard, logoutUser, convertTime, convertDate }}>
+        <DashboardContext.Provider value={{ user, topTenRows, leaderboard, userLookup, setUserLookup, fullLeaderboard, getFullLeaderboard, setFullLeaderboard, convertTime, convertDate, logoutUser }}>
             <Navbar />
             <Outlet context={{ user }} />
         </DashboardContext.Provider>

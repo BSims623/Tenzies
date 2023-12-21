@@ -1,23 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Wrapper from '../assets/wrappers/Game'
-import Die from '../components/Die'
 import { GameContainer, LeaderBoardContainer } from '../components'
-import { Link, useLoaderData } from 'react-router-dom'
-import customFetch from '../utils/customFetch'
-
+import { Link } from 'react-router-dom'
 
 const Game = () => {
-    // const [topTen, setTopTen] = useState(useLoaderData())
-
-    // const getTopTen = async () => {
-    //     try {
-    //         const { data } = await customFetch.get('/leaderboard/get-leaderboard?limit=10')
-    //         return data.leaderboard
-    //     } catch (error) {
-    //         console.log(error);
-    //         return error
-    //     }
-    // }
 
     return (
         <Wrapper className='d-flex flex-column align-items-center'>

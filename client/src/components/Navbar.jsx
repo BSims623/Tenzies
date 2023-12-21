@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import Wrapper from '../assets/wrappers/Navbar'
 import { useDashboardContext } from '../pages/Dashboard'
 
 const Navbar = () => {
     const { user, logoutUser } = useDashboardContext();
+
 
     return (
         <Wrapper className="navbar navbar-expand-lg bg-dark " aria-label="Thirteenth navbar example">

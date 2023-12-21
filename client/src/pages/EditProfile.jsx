@@ -4,7 +4,7 @@ import customFetch from '../utils/customFetch';
 import { useDashboardContext } from './Dashboard'
 import { toast } from 'react-toastify';
 
-export const action = async ({ request }) => {
+export const action = (queryClient) => async ({ request }) => {
     const formData = await request.formData();
     const file = formData.get('avatar');
     if (file && file.size > 500000) {
@@ -13,19 +13,18 @@ export const action = async ({ request }) => {
     }
     try {
         await customFetch.patch('/users/update-user', formData)
-        //queryClient.invalidateQueries(['user'])
+        queryClient.invalidateQueries(['stats']);
         toast.success('Profile updated successfully')
         return redirect('/dashboard/profile')
     } catch (error) {
         console.log(error);
         toast.error(error?.response?.data?.msg)
         return null
-
     }
 }
 
 const EditProfile = () => {
-    const { user, updateUser, forceUpdate, setForceUpdate } = useDashboardContext();
+    const { user, updateUser } = useDashboardContext();
     const navigate = useNavigate();
 
 

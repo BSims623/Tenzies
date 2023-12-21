@@ -17,8 +17,14 @@ const UserSchema = new mongoose.Schema({
         type: Number,
         default: 0,
     },
-    avatar: String,
-    avatarPublicId: String,
+    avatar: {
+        type: String,
+        default: "https://res.cloudinary.com/ddkgvictl/image/upload/v1703192944/lxul9tzuxsra9eoubzj1.jpg",
+    },
+    avatarPublicId: {
+        type: String,
+        default: "lxul9tzuxsra9eoubzj1",
+    },
     createdAt: {
         type: Date,
         default: Date.now()

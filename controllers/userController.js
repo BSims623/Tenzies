@@ -16,11 +16,6 @@ export const getCurrentUser = async (req, res) => {
 }
 
 export const updateUser = async (req, res) => {
-    // const newUser = { ...req.body }
-    // delete newUser.password
-
-    // const updatedUser = await User.findByIdAndUpdate(req.user.userId, newUser)
-    // res.status(StatusCodes.OK).json({ updatedUser: updatedUser })
 
     console.log(req.file);
     const newUser = { ...req.body }
@@ -35,7 +30,7 @@ export const updateUser = async (req, res) => {
     const updatedUser = await User.findByIdAndUpdate(req.user.userId, newUser)
 
     if (req.file && updatedUser.avatarPublicId) {
-        await cloudinary.v2.uploader.destroy(updatedUser.avatarPublicId);
+        if (updatedUser.avatarPublicId !== "lxul9tzuxsra9eoubzj1") await cloudinary.v2.uploader.destroy(updatedUser.avatarPublicId);
     }
 
     res.status(StatusCodes.OK).json({ msg: 'update user' })

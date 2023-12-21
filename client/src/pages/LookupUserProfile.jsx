@@ -6,22 +6,13 @@ import customFetch from '../utils/customFetch'
 
 const LookupUserProfile = () => {
     const { user, userLookup, convertTime, convertDate, fullLeaderboard } = useDashboardContext();
-    const [currentUser, setCurrentUser] = useState(userLookup);
-    const navigate = useNavigate();
-    console.log(userLookup);
+    // const { user, setUser, convertTime, convertDate, fullLeaderboard } = useDashboardContext();
+    //const [currentUser, setCurrentUser] = useState(user);
+    // const navigate = useNavigate();
 
-    useEffect(() => {
-        const fetchDataAndUpdate = async () => {
-            //const { data } = await customFetch.get('users/current-user')
-            let updateCurrentUser = getUserRank(userLookup.username)
-            if (!updateCurrentUser) updateCurrentUser = user
-            setCurrentUser(updateCurrentUser)
-        }
-        fetchDataAndUpdate()
-        // let updateCurrentUser = getUserRank(user.username)
-        // if (!updateCurrentUser) updateCurrentUser = user
-        // setUser(updateCurrentUser)
-    }, [navigate])
+    let currentUser = getUserRank(userLookup.username) || user;
+    console.log(currentUser);
+
 
     function getUserRank(userName) {
         return fullLeaderboard.map((user, index) => {
@@ -45,8 +36,9 @@ const LookupUserProfile = () => {
                 <h2>RECORD ROLLS: {currentUser.rolls ? user.rolls : 'No Rolls'}</h2>
                 <h2>GAMES PLAYED: {currentUser.gamesPlayed}</h2>
                 <h2>MEMBER SINCE: {convertDate(currentUser.createdAt)}</h2>
-                <div className={`btnContainer ${user.username !== currentUser.username && 'd-none'}`}>
-                    <Link to='/dashboard/profile/edit-profile' className='btn btn-danger' type="button">Edit User</Link >
+                <div className='btnContainer d-flex'>
+                    <Link to='/dashboard/profile/edit-profile' className={`btn btn-danger me-3 ${user.username !== currentUser.username && 'd-none'}`} type="button">Edit User</Link >
+                    <Link to='/dashboard/leaderboard' className='btn btn-primary' type="button">Full Leaderboard</Link >
                 </div>
             </div>
         </Wrapper>

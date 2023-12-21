@@ -6,14 +6,11 @@ import { useDashboardContext } from '../pages/Dashboard'
 
 
 const LeaderBoardContainer = () => {
-    const { convertTime, fullLeaderboard } = useDashboardContext();
+    const { convertTime, topTenRows } = useDashboardContext();
 
-    const topTen = fullLeaderboard.slice(0, 10)
-
-
-    const topTenRows = topTen.map((user, index) => {
-        return <LeaderBoardRow key={user._id} rank={index + 1} avatar={user.avatar} username={user.username} location={user.location} time={convertTime(user.time)} rolls={user.rolls} />
-    })
+    // const topTenRows = topTen.map((user, index) => {
+    //     return <LeaderBoardRow key={user._id} rank={index + 1} avatar={user.avatar} username={user.username} location={user.location} time={user.time} rolls={user.rolls} />
+    // })
 
 
     return (

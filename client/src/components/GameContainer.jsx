@@ -18,14 +18,17 @@ const GameContainer = () => {
     const [bestTime, setBestTime] = useState(user.time)
     const [gamesPlayed, setGamesPlayed] = useState(user.gamesPlayed)
     const startTimeRef = useRef(null);
+    //setBestTime(user.time);
+    //console.log(user, 'game', bestTime, user.time);
 
     useEffect(() => {
+        //setBestTime(user.time);
         const allHeld = dice.every((die) => die.isHeld);
         const firstValue = dice[0].value;
         const allTheSame = dice.every((die) => die.value === firstValue);
         if (allHeld && allTheSame) {
             setIsRunning(false)
-            newBestTime()
+            //newBestTime()
             setTenzies(true)
         }
     }, [dice])
@@ -70,17 +73,18 @@ const GameContainer = () => {
 
     ////// Best Time ////////
 
-    const btMinutes = Math.floor(bestTime / 6000) % 60;
+    const btMinutes = Math.floor(user.time / 6000) % 60;
 
-    const btSeconds = Math.floor(bestTime / 100) % 60;
+    const btSeconds = Math.floor(user.time / 100) % 60;
 
-    const btMilliseconds = bestTime % 100;
+    const btMilliseconds = user.time % 100;
 
-    function newBestTime() {
-        if ((bestTime - time) > 0 || bestTime === undefined) {
-            setBestTime(time)
-            setRecordRoll(count)
+    function newBestTime(updatedUser) {
+        if ((updatedUser.time - time) > 0 || updatedUser.time === undefined) {
+            updatedUser.time = time;
+            updatedUser.rolls = count;
         }
+        return updatedUser
     }
 
     let bestTimeDisplay = `${btMinutes.toString().padStart(1, "0")}:${btSeconds.toString().padStart(2, "0")}:${btMilliseconds.toString().padStart(2, "0")}`
@@ -97,10 +101,13 @@ const GameContainer = () => {
         updatedUser.gamesPlayed = gamesPlayed;
         updatedUser.time = bestTime;
         updatedUser.rolls = recordRoll;
+        newBestTime(updatedUser);
+        console.log(user);
+        console.log(updatedUser);
 
         try {
-            const newUser = await customFetch.patch('/users/update-guest', updatedUser)
-            getFullLeaderboard()
+            const newUser = await customFetch.patch('/users/update-guest', updatedUser);
+            getFullLeaderboard();
         } catch (error) {
             console.log(error);
             return error
@@ -174,18 +181,18 @@ const GameContainer = () => {
                 </div>
                 <div className="row mt-3">
                     <div className="col">
-                        <h4 className='text-success'>RECORD ROLLS</h4>
+                        <h4 className='text-primary'>RECORD ROLLS</h4>
                     </div>
                     <div className="col">
-                        <h4 className='text-success'>PERSONAL RECORD</h4>
+                        <h4 className='text-primary'>PERSONAL RECORD</h4>
                     </div>
                 </div>
                 <div className="row">
                     <div className="col">
-                        <h4 className='text-success'>{recordRoll > 0 ? recordRoll : 'No Rolls'}</h4>
+                        <h4 className='text-primary'>{user.rolls > 0 ? user.rolls : 'No Rolls'}</h4>
                     </div>
                     <div className="col">
-                        <h4 className='text-success'>{bestTime !== undefined ? bestTimeDisplay : 'No Time'}</h4>
+                        <h4 className='text-primary'>{user.time !== undefined ? bestTimeDisplay : 'No Time'}</h4>
                     </div>
                 </div>
             </div>

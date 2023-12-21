@@ -20,10 +20,10 @@ import { useDashboardContext } from '../pages/Dashboard'
 
 const FullLeaderBoard = () => {
     //const [leaderboard, setLeaderboard] = useState(useLoaderData())
-    const { user, convertTime, fullLeaderboard } = useDashboardContext()
+    const { user, leaderboard, convertTime, fullLeaderboard } = useDashboardContext()
 
-    const fullLeaderboardRows = fullLeaderboard.map((user, index) => {
-        return <LeaderBoardRow key={user._id} rank={index + 1} avatar={user.avatar} username={user.username} location={user.location} time={convertTime(user.time)} rolls={user.rolls} />
+    const fullLeaderboardRows = leaderboard.map((user, index) => {
+        return <LeaderBoardRow key={user._id} rank={index + 1} avatar={user.avatar} username={user.username} location={user.location} time={user.time} rolls={user.rolls} />
     })
 
     return (

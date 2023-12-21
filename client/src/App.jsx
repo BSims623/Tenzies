@@ -1,5 +1,7 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { HomeLayout, Landing, Register, Login, Dashboard, Game, Profile, CurrentUserProfile, EditProfile, LookupUserProfile, FullLeaderBoard, Error } from "./pages";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
@@ -8,6 +10,14 @@ import { action as registerAction } from './pages/Register';
 import { action as loginAction } from './pages/Login';
 import { action as editProfileAction } from './pages/EditProfile';
 import { loader as dashboardLoader } from './pages/Dashboard'
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 5,
+    },
+  },
+});
 
 const router = createBrowserRouter([
   {
@@ -27,12 +37,12 @@ const router = createBrowserRouter([
       {
         path: 'login',
         element: <Login />,
-        action: loginAction,
+        action: loginAction(queryClient),
       },
       {
         path: 'dashboard',
-        element: <Dashboard />,
-        loader: dashboardLoader,
+        element: <Dashboard queryClient={queryClient} />,
+        loader: dashboardLoader(queryClient),
         children: [
           {
             index: true,
@@ -49,7 +59,7 @@ const router = createBrowserRouter([
               {
                 path: 'edit-profile',
                 element: <EditProfile />,
-                action: editProfileAction,
+                action: editProfileAction(queryClient),
               },
               {
                 path: 'lookup-user',
@@ -72,7 +82,10 @@ const router = createBrowserRouter([
 
 const App = () => {
   return (
-    <RouterProvider router={router} />
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
   )
 }
 

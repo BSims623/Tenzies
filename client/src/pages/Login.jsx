@@ -4,13 +4,18 @@ import customFetch from '../utils/customFetch';
 import { Form, redirect, useNavigation, Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-export const action = async ({ request }) => {
+export const action = (queryClient) => async ({ request }) => {
     const formData = await request.formData();
     const data = Object.fromEntries(formData);
-
-    await customFetch.post('/auth/login', data)
-    return redirect('/dashboard')
-
+    try {
+        await customFetch.post('/auth/login', data);
+        queryClient.invalidateQueries();
+        toast.success('successfully logged in');
+        return redirect('/dashboard');
+    } catch (error) {
+        toast.error(error?.response?.data?.msg);
+        return error;
+    }
 }
 
 const Login = () => {
@@ -55,7 +60,7 @@ const Login = () => {
                 </div>
                 <div className="buttonContainer d-flex flex-column justify-content-center">
                     <button className="btn btn-danger mb-3" type="submit">Sign in</button>
-                    <button className="btn btn-danger" onClick={loginGuest}>Demo User</button>
+                    <button className="btn btn-danger" type='button' onClick={loginGuest}>Demo User</button>
                 </div>
             </Form>
         </Wrapper>
