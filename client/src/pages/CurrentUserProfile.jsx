@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import Wrapper from '../assets/wrappers/Profile'
-import img from "/Users/briansims/Desktop/MyTenzies/client/src/assets/images/avatarDefault.jpg"
 import { useDashboardContext } from './Dashboard'
 import { Link, useNavigate } from 'react-router-dom'
 import customFetch from '../utils/customFetch'

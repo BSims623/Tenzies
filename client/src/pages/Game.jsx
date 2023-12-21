@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Wrapper from '../assets/wrappers/Game'
-import { nanoid } from 'nanoid'
 import Die from '../components/Die'
 import { GameContainer, LeaderBoardContainer } from '../components'
 import { Link, useLoaderData } from 'react-router-dom'
