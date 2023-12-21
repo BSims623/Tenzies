@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Wrapper from '../assets/wrappers/Navbar'
-import img from "/Users/briansims/Desktop/MyTenzies/client/src/assets/images/avatarDefault.jpg"
 import { useDashboardContext } from '../pages/Dashboard'
 
 const Navbar = () => {
