@@ -10,7 +10,7 @@ const Landing = () => {
                 <h1 className='fw-bold mt-2 text-danger logo'>TENZIES</h1>
             </div>
             <div className="container-fluid d-flex align-items-center justify-content-center">
-                <div className="content pe-5 d-flex flex-column justify-content-center">
+                <div className="content d-flex flex-column justify-content-center">
                     <h1 className='display-5 fw-bold lh-1 text-center text-light my-5'>Welcome to <span className='text-danger'>Tenzies</span>!</h1>
                     <div className="buttonContainer d-flex justify-content-center my-5">
                         <Link to='/register' className='btn btn-primary mx-2'>Register</Link>

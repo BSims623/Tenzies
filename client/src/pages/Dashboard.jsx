@@ -33,10 +33,9 @@ const Dashboard = ({ queryClient }) => {
     const user = data.currentUser;
     const { topTen } = data;
     const { leaderboard } = data;
-    //const [user, setUser] = useState(currentUser)
     const [fullLeaderboard, setFullLeaderboard] = useState(leaderboard);
-    // const [topTen, setTopTen] = ([])
     const [userLookup, setUserLookup] = useState(user)
+    console.log(user);
 
     const logoutUser = async () => {
         navigate('/');
