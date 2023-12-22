@@ -1,21 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import Wrapper from '../assets/wrappers/Profile'
 import { useDashboardContext } from './Dashboard'
-import { Link, useNavigate } from 'react-router-dom'
-import customFetch from '../utils/customFetch'
+import { Link } from 'react-router-dom'
 
 const LookupUserProfile = () => {
-    const { user, userLookup, convertTime, convertDate, fullLeaderboard } = useDashboardContext();
-    // const { user, setUser, convertTime, convertDate, fullLeaderboard } = useDashboardContext();
-    //const [currentUser, setCurrentUser] = useState(user);
-    // const navigate = useNavigate();
+    const { user, userLookup, convertTime, convertDate, leaderboard } = useDashboardContext();
+
 
     let currentUser = getUserRank(userLookup.username) || user;
-    console.log(currentUser);
-
 
     function getUserRank(userName) {
-        return fullLeaderboard.map((user, index) => {
+        return leaderboard.map((user, index) => {
             user.rank = index + 1;
             return user
         }).find(user => user.username === userName)
