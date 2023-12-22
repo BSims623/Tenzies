@@ -3,6 +3,11 @@ dotenv.config()
 import express from 'express'
 import 'express-async-errors';
 import mongoose from 'mongoose';
+import helmet from 'helmet';
+import mongoSanitize from 'express-mongo-sanitize';
+import morgan from 'morgan';
+import cloudinary from 'cloudinary';
+import cookieParser from 'cookie-parser';
 
 const app = express()
 
@@ -17,11 +22,10 @@ import { fileURLToPath } from 'url';
 import path from 'path';
 
 // middleware
-import cookieParser from 'cookie-parser';
+
 import { authenticateUser } from './middleware/authMiddleware.js';
 import errorHandlerMiddleware from './middleware/errorHandlerMiddleware.js'
-import morgan from 'morgan';
-import cloudinary from 'cloudinary';
+
 
 cloudinary.config({
     cloud_name: process.env.CLOUD_NAME,
@@ -37,8 +41,10 @@ if (process.env.NODE_ENV === 'development') {
 
 app.use(express.static(path.resolve(__dirname, './client/dist')))
 
-app.use(cookieParser())
-app.use(express.json())
+app.use(cookieParser());
+app.use(express.json());
+app.use(helmet());
+app.use(mongoSanitize())
 
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/users', authenticateUser, userRouter)
