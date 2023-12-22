@@ -44,16 +44,7 @@ app.use(express.static(path.resolve(__dirname, './client/dist')))
 app.use(cookieParser());
 app.use(express.json());
 app.use(helmet());
-app.use(mongoSanitize())
-
-app.use(
-    helmet.contentSecurityPolicy({
-        useDefaults: true,
-        directives: {
-            "img-src": ["'self'", "https: data:"],
-        },
-    })
-);
+app.use(mongoSanitize());
 
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/users', authenticateUser, userRouter)

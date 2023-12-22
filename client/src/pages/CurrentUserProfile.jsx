@@ -10,8 +10,6 @@ const userProfile = () => {
     // const navigate = useNavigate();
 
     let currentUser = getUserRank(user.username) || user;
-    console.log(currentUser);
-
 
     function getUserRank(userName) {
         return fullLeaderboard.map((user, index) => {
