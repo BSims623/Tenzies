@@ -23,12 +23,12 @@ export const updateUser = async (req, res) => {
 
     if (req.file) {
         const file = formatImage(req.file)
-        //const response = await cloudinary.v2.uploader.upload(file);
-        const response = await cloudinary.v2.uploader.upload(file, {
-            transformation: [
-                { fetch_format: "auto" }
-            ]
-        });
+        const response = await cloudinary.v2.uploader.upload(file);
+        // const response = await cloudinary.v2.uploader.upload(file, {
+        //     transformation: [
+        //         { fetch_format: "auto" }
+        //     ]
+        // });
         newUser.avatar = response.secure_url
         newUser.avatarPublicId = response.public_id
     }
