@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-//import Wrapper from '../assets/wrappers/GameContainer'
-import Wrapper from '../assets/wrappers/NewGameContainer'
+import Wrapper from '../assets/wrappers/GameContainer'
 import { nanoid } from 'nanoid'
 import Die from '../components/Die'
 import { useDashboardContext } from '../pages/Dashboard'
@@ -8,28 +7,21 @@ import customFetch from '../utils/customFetch'
 
 
 const GameContainer = () => {
-    const { user, setFullLeaderboard, getFullLeaderboard } = useDashboardContext();
+    const { user, convertTime, getFullLeaderboard } = useDashboardContext();
     const [dice, setDice] = useState(allNewDice());
     const [tenzies, setTenzies] = useState(false);
     const [count, setCount] = useState(0);
-    const [recordRoll, setRecordRoll] = useState(user.rolls)
     const [newGame, setNewGame] = useState(true)
     const [isRunning, setIsRunning] = useState(false)
     const [time, setTime] = useState(0)
-    const [bestTime, setBestTime] = useState(user.time)
-    const [gamesPlayed, setGamesPlayed] = useState(user.gamesPlayed)
     const startTimeRef = useRef(null);
-    //setBestTime(user.time);
-    //console.log(user, 'game', bestTime, user.time);
 
     useEffect(() => {
-        //setBestTime(user.time);
         const allHeld = dice.every((die) => die.isHeld);
         const firstValue = dice[0].value;
         const allTheSame = dice.every((die) => die.value === firstValue);
         if (allHeld && allTheSame) {
             setIsRunning(false)
-            //newBestTime()
             setTenzies(true)
         }
     }, [dice])
@@ -50,7 +42,7 @@ const GameContainer = () => {
 
             const elapsedTime = timestamp - startTimeRef.current;
             if (isRunning) {
-                setTime(Math.floor(elapsedTime / 10)); // Update time every 10 milliseconds
+                setTime(Math.floor(elapsedTime / 10));
             }
 
             requestRef = requestAnimationFrame(animate);
@@ -74,12 +66,6 @@ const GameContainer = () => {
 
     ////// Best Time ////////
 
-    const btMinutes = Math.floor(user.time / 6000) % 60;
-
-    const btSeconds = Math.floor(user.time / 100) % 60;
-
-    const btMilliseconds = user.time % 100;
-
     function newBestTime(updatedUser) {
         if ((updatedUser.time - time) > 0 || updatedUser.time === undefined) {
             updatedUser.time = time;
@@ -87,9 +73,6 @@ const GameContainer = () => {
         }
         return updatedUser
     }
-
-    let bestTimeDisplay = `${btMinutes.toString().padStart(1, "0")}:${btSeconds.toString().padStart(2, "0")}:${btMilliseconds.toString().padStart(2, "0")}`
-
 
     const styles = {
         color: isRunning ? '#dc3545' : '#f8f9fa'
@@ -99,12 +82,8 @@ const GameContainer = () => {
 
     async function updateUser() {
         const updatedUser = { ...user };
-        updatedUser.gamesPlayed = gamesPlayed;
-        updatedUser.time = bestTime;
-        updatedUser.rolls = recordRoll;
+        updatedUser.gamesPlayed = user.gamesPlayed + 1;
         newBestTime(updatedUser);
-        console.log(user);
-        console.log(updatedUser);
 
         try {
             const newUser = await customFetch.patch('/users/update-guest', updatedUser);
@@ -162,7 +141,7 @@ const GameContainer = () => {
         }
 
     }
-    //////// Margin 
+
     let diceElements = dice.map((die) => {
         return <Die value={die.value} isHeld={die.isHeld} key={die.id} id={die.id} holdDie={holdDie} />
     });
@@ -193,7 +172,7 @@ const GameContainer = () => {
                         <h4 className='text-primary'>{user.rolls > 0 ? user.rolls : 'No Rolls'}</h4>
                     </div>
                     <div className="col">
-                        <h4 className='text-primary'>{user.time !== undefined ? bestTimeDisplay : 'No Time'}</h4>
+                        <h4 className='text-primary'>{user.time !== undefined ? convertTime(user.time) : 'No Time'}</h4>
                     </div>
                 </div>
             </div>
@@ -203,40 +182,6 @@ const GameContainer = () => {
             <button className='rollBtn btn btn-danger mt-3 px-5 py-3' type="button" onClick={() => rollTheDice()}>{tenzies ? 'NEW GAME' : 'ROLL'}</button>
 
         </Wrapper>
-        // <Wrapper className="mainContainer d-flex flex-column align-items-center mt-5 py-3 rounded bg-dark">
-        //     <h1 className='display-5 fw-bold lh-1 text-center text-danger'>{tenzies ? 'You Won!!!' : 'Tenzies'}</h1>
-        //     <h5 className='text-center text-light mx-3'>Roll until all dice are the same. Click each die to freeze it at its current value between rolls. And one more thing... Go FAST!</h5>
-        //     <div className="container mt-5 text-light">
-        //         <div className="row">
-        //             <div className="col">
-        //                 <h4>ROLL#<span className='ms-2' style={styles}>{count}</span></h4>
-        //             </div>
-        //             <div className="col">
-        //                 <h4>TIME: <span style={styles}>{minutes.toString().padStart(1, "0")}:{seconds.toString().padStart(2, "0")}:{milliseconds.toString().padStart(2, "0")}</span></h4>
-        //             </div>
-        //         </div>
-        //         <div className="row mt-3">
-        //             <div className="col">
-        //                 <h4 className='text-primary'>RECORD ROLLS</h4>
-        //             </div>
-        //             <div className="col">
-        //                 <h4 className='text-primary'>PERSONAL RECORD</h4>
-        //             </div>
-        //         </div>
-        //         <div className="row">
-        //             <div className="col">
-        //                 <h4 className='text-primary'>{user.rolls > 0 ? user.rolls : 'No Rolls'}</h4>
-        //             </div>
-        //             <div className="col">
-        //                 <h4 className='text-primary'>{user.time !== undefined ? bestTimeDisplay : 'No Time'}</h4>
-        //             </div>
-        //         </div>
-        //     </div>
-        //     <div className={newGame ? 'diceContainer mt-5 bg-danger rounded position-relative d-flex justify-content-center align-items-center' : "diceContainer mt-5 bg-danger rounded"}>
-        //         {newGame ? <h1>Ready?</h1> : diceElements}
-        //     </div>
-        //     <button className='rollBtn btn btn-danger mt-3 px-5 py-3' type="button" onClick={() => rollTheDice()}>{tenzies ? 'NEW GAME' : 'ROLL'}</button>
-        // </Wrapper>
     )
 }
 

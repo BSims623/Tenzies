@@ -17,7 +17,7 @@ export const getCurrentUser = async (req, res) => {
 
 export const updateUser = async (req, res) => {
 
-    console.log(req.file);
+    //console.log(req.file);
     const newUser = { ...req.body }
     delete newUser.password
 

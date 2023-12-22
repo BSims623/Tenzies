@@ -26,7 +26,7 @@ const withValidationErrors = (validateValues) => {
 
 export const validateRegisterInput = withValidationErrors([
     body('firstName').notEmpty().withMessage('first name is required').isLength({ max: 15 }).withMessage('first name can be 15 characters max'),
-    body('username').notEmpty().withMessage('username is required').isLength({ max: 7 }).withMessage('username can be 7 characters max')
+    body('username').notEmpty().withMessage('username is required').isLength({ max: 8 }).withMessage('username can be 8 characters max')
         .custom(async (username) => {
             const user = await User.findOne({ username: username })
             if (user) {

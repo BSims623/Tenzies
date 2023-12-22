@@ -1,7 +1,5 @@
 import React from 'react'
 
-//  width="80" height="80"
-
 const Dice3 = (props) => {
     return (
         <div className="die" style={props.styles} onClick={() => props.holdDie(props.id)}>

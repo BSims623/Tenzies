@@ -19,11 +19,11 @@ const UserSchema = new mongoose.Schema({
     },
     avatar: {
         type: String,
-        default: "https://res.cloudinary.com/ddkgvictl/image/upload/v1703192944/lxul9tzuxsra9eoubzj1.jpg",
+        default: "https://res.cloudinary.com/ddkgvictl/image/upload/v1703227578/gr4gvu1w6w3xbq83ezzg.jpg",
     },
     avatarPublicId: {
         type: String,
-        default: "lxul9tzuxsra9eoubzj1",
+        default: "gr4gvu1w6w3xbq83ezzg",
     },
     createdAt: {
         type: Date,

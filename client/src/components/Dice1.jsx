@@ -2,7 +2,6 @@ import React from 'react'
 
 const Dice1 = (props) => {
 
-    // width="80" height="80"
     return (
         <div className="die" style={props.styles} onClick={() => props.holdDie(props.id)}>
             <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor" className="bi bi-dice-1-fill" viewBox="0 0 16 16">
