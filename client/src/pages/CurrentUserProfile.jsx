@@ -1,18 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import Wrapper from '../assets/wrappers/Profile'
 import { useDashboardContext } from './Dashboard'
-import { Link, useNavigate } from 'react-router-dom'
-import customFetch from '../utils/customFetch'
+import { Link } from 'react-router-dom'
 
 const userProfile = () => {
-    const { user, setUser, convertTime, convertDate, fullLeaderboard } = useDashboardContext();
-    //const [currentUser, setCurrentUser] = useState(user);
-    // const navigate = useNavigate();
+    const { user, convertTime, convertDate, leaderboard } = useDashboardContext();
 
     let currentUser = getUserRank(user.username) || user;
 
     function getUserRank(userName) {
-        return fullLeaderboard.map((user, index) => {
+        return leaderboard.map((user, index) => {
             user.rank = index + 1;
             return user
         }).find(user => user.username === userName)
@@ -34,7 +31,8 @@ const userProfile = () => {
                 <h2>GAMES PLAYED: {currentUser.gamesPlayed}</h2>
                 <h2>MEMBER SINCE: {convertDate(currentUser.createdAt)}</h2>
                 <div className="buttonContainer mt-4 d-flex flex-column justify-content-center">
-                    <Link to='edit-profile' className='btn btn-danger' type="button">Edit User</Link >
+                    <Link to='edit-profile' className='btn btn-danger mb-3' type="button">Edit User</Link >
+                    <Link to='/dashboard' className='btn btn-primary mb-3' type="button">Back To Game</Link >
                 </div>
             </div>
         </Wrapper>
