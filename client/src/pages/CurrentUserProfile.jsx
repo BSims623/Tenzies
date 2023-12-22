@@ -35,7 +35,7 @@ const userProfile = () => {
                 <h2>RECORD ROLLS: {currentUser.rolls ? currentUser.rolls : 'No Rolls'}</h2>
                 <h2>GAMES PLAYED: {currentUser.gamesPlayed}</h2>
                 <h2>MEMBER SINCE: {convertDate(currentUser.createdAt)}</h2>
-                <div className="btnContainer">
+                <div className="buttonContainer mt-4 d-flex flex-column justify-content-center">
                     <Link to='edit-profile' className='btn btn-danger' type="button">Edit User</Link >
                 </div>
             </div>

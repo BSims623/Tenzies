@@ -2,24 +2,11 @@ import React, { useState } from 'react'
 import { LeaderBoardLegend, LeaderBoardRow } from '../components'
 import FullWrapper from '../assets/wrappers/FullLeaderBoard'
 import Wrapper from '../assets/wrappers/LeaderBoard'
-import { useLoaderData } from 'react-router-dom'
-import customFetch from '../utils/customFetch'
+import { Link } from 'react-router-dom'
 import { useDashboardContext } from '../pages/Dashboard'
 
 
-// export const loader = async () => {
-//     try {
-//         const { data } = await customFetch.get('/leaderboard/get-leaderboard')
-//         return data.leaderboard
-//     } catch (error) {
-//         console.log(error);
-//         return error
-//     }
-// }
-
-
 const FullLeaderBoard = () => {
-    //const [leaderboard, setLeaderboard] = useState(useLoaderData())
     const { user, leaderboard, convertTime, fullLeaderboard } = useDashboardContext()
 
     const fullLeaderboardRows = leaderboard.map((user, index) => {
@@ -31,6 +18,9 @@ const FullLeaderBoard = () => {
             <Wrapper>
                 <LeaderBoardLegend />
                 {fullLeaderboardRows}
+                <div className="buttonContainer mt-4 d-flex flex-column justify-content-center">
+                    <Link to='/dashboard' className='btn btn-primary mb-3' type="button">Back To Game</Link >
+                </div>
             </Wrapper>
         </FullWrapper>
     )

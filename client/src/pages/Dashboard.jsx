@@ -35,7 +35,6 @@ const Dashboard = ({ queryClient }) => {
     const { leaderboard } = data;
     const [fullLeaderboard, setFullLeaderboard] = useState(leaderboard);
     const [userLookup, setUserLookup] = useState(user)
-    console.log(user);
 
     const logoutUser = async () => {
         navigate('/');
@@ -66,7 +65,6 @@ const Dashboard = ({ queryClient }) => {
     }
 
     let topTenRows = topTen.map((user, index) => {
-        console.log(user.avatar);
         return <LeaderBoardRow key={user._id} rank={index + 1} avatar={user.avatar} username={user.username} location={user.location} time={user.time} rolls={user.rolls} />
     })
 

@@ -36,9 +36,9 @@ const LookupUserProfile = () => {
                 <h2>RECORD ROLLS: {currentUser.rolls ? user.rolls : 'No Rolls'}</h2>
                 <h2>GAMES PLAYED: {currentUser.gamesPlayed}</h2>
                 <h2>MEMBER SINCE: {convertDate(currentUser.createdAt)}</h2>
-                <div className='btnContainer d-flex'>
-                    <Link to='/dashboard/profile/edit-profile' className={`btn btn-danger me-3 ${user.username !== currentUser.username && 'd-none'}`} type="button">Edit User</Link >
-                    <Link to='/dashboard/leaderboard' className='btn btn-primary' type="button">Full Leaderboard</Link >
+                <div className="buttonContainer mt-4 d-flex flex-column justify-content-center">
+                    <Link to='/dashboard/profile/edit-profile' className={`btn btn-danger mb-3 ${user.username !== currentUser.username && 'd-none'}`} type="button">Edit User</Link >
+                    <Link to='/dashboard/leaderboard' className='btn btn-primary mb-3' type="button">Full Leaderboard</Link >
                 </div>
             </div>
         </Wrapper>

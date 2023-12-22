@@ -32,9 +32,6 @@ max-width: 700px;
   min-width: 200px;
 }
 
-svg {
-   
-}
 
 
 @media screen and (max-width: 991px) {

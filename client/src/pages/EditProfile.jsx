@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 export const action = (queryClient) => async ({ request }) => {
     const formData = await request.formData();
     const file = formData.get('avatar');
-    if (file && file.size > 500000) {
+    if (file && file.size > 3000000) {
         toast.error('image size too large')
         return null
     }
@@ -54,7 +54,7 @@ const EditProfile = () => {
                     </div>
                     <div className="form-group mb-3">
                         <label className="text-light" htmlFor="avatar">
-                            <h4>Select an image file (max 0.5 MB)</h4>
+                            <h4>Select an image file (max 3 MB)</h4>
                         </label>
                         <input className='text-light' type="file" id='avatar' name='avatar' accept='image/*' />
                     </div>
