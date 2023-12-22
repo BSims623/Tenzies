@@ -10,7 +10,6 @@ import cloudinary from 'cloudinary';
 import cookieParser from 'cookie-parser';
 
 const app = express()
-app.set('trust proxy', true);
 
 // routers
 import authRouter from './routes/authRouter.js'
