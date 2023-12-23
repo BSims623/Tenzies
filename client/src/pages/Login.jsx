@@ -60,7 +60,7 @@ const Login = () => {
                 </div>
                 <div className="buttonContainer d-flex flex-column justify-content-center">
                     <button className="btn btn-danger mb-3" type="submit">Sign in</button>
-                    <button className="btn btn-danger" type='button' onClick={loginGuest}>Demo User</button>
+                    <button className="btn btn-primary" type='button' onClick={loginGuest}>Demo User</button>
                 </div>
             </Form>
         </Wrapper>
