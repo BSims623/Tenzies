@@ -132,7 +132,6 @@ const GameContainer = () => {
             setTime(0)
         } else if (!isRunning && !tenzies) {
             setIsRunning(!isRunning)
-            setGamesPlayed(gamesPlayed + 1)
         } else {
             setCount(count + 1)
             setDice(prevDice => prevDice.map((die) => {
@@ -147,7 +146,7 @@ const GameContainer = () => {
     });
 
     return (
-        <Wrapper className="mainContainer d-flex flex-column align-items-center mt-5 py-4 px-2 rounded bg-dark">
+        <Wrapper className="mainContainer d-flex flex-column align-items-center py-4 px-2 rounded bg-dark">
             <h1 className='display-5 fw-bold lh-1 text-center text-danger'>{tenzies ? 'You Won!!!' : 'Tenzies'}</h1>
             <h5 className='text-center text-light mx-3'>Roll until all dice are the same. Click each die to freeze it at its current value between rolls. And one more thing... Go FAST!</h5>
             <div className="container mt-5 text-light">

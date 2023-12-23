@@ -7,10 +7,6 @@ img {
     height: 24px;
     object-fit: cover;
 }
-.col {
-    //border: 1px solid white;
-}
-
 `
 
 export default Wrapper

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React from 'react'
 import Wrapper from '../assets/wrappers/Game'
 import { GameContainer, LeaderBoardContainer } from '../components'
 import { Link } from 'react-router-dom'

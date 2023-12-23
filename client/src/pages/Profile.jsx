@@ -1,6 +1,5 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { Outlet } from 'react-router-dom'
-import { useDashboardContext } from './Dashboard'
 
 const Profile = () => {
 

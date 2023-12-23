@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { LeaderBoardLegend, LeaderBoardRow } from '../components'
 import FullWrapper from '../assets/wrappers/FullLeaderBoard'
 import Wrapper from '../assets/wrappers/LeaderBoard'
@@ -7,7 +7,7 @@ import { useDashboardContext } from '../pages/Dashboard'
 
 
 const FullLeaderBoard = () => {
-    const { user, leaderboard, convertTime, fullLeaderboard } = useDashboardContext()
+    const { leaderboard } = useDashboardContext()
 
     const fullLeaderboardRows = leaderboard.map((user, index) => {
         return <LeaderBoardRow key={user._id} rank={index + 1} avatar={user.avatar} username={user.username} location={user.location} time={user.time} rolls={user.rolls} />

@@ -3,7 +3,7 @@ import User from '../models/UserModel.js'
 
 export const getLeaderboard = async (req, res) => {
     const { limit } = req.query;
-    const leaderboard = await (await User.find({}).gt('time', 0).sort('time').limit(limit))
+    const leaderboard = (await User.find({}).gt('time', 0).sort('time').limit(limit))
 
     res.status(StatusCodes.OK).json({ leaderboard: leaderboard })
 }
