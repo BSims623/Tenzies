@@ -130,15 +130,15 @@ const GameContainer = () => {
             setDice(allNewDice())
             setCount(0)
             setTime(0)
-        } else if (!isRunning && !tenzies) {
-            setIsRunning(!isRunning)
         } else {
             setCount(count + 1)
             setDice(prevDice => prevDice.map((die) => {
                 return die.isHeld ? die : { ...die, value: randomNumber() }
             }))
         }
-
+        if (!isRunning && !tenzies) {
+            setIsRunning(!isRunning)
+        }
     }
 
     let diceElements = dice.map((die) => {
