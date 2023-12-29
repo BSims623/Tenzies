@@ -5,9 +5,9 @@ export const authenticateUser = (req, res, next) => {
     const { token } = req.cookies;
     if (!token) throw new UnauthenticatedError('authentication invalid')
     try {
-        const { userId, role } = verifyJWT(token);
+        const { userId, role, avatarPublicId } = verifyJWT(token);
         const testUser = userId === '6585164351c0bb0f83028abd'
-        req.user = { userId, role, testUser }
+        req.user = { userId, role, testUser, avatarPublicId }
         next()
     } catch (error) {
         throw new UnauthenticatedError('authentication invalid')

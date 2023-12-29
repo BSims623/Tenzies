@@ -42,6 +42,7 @@ export const updateUser = async (req, res) => {
 }
 
 export const deleteUser = async (req, res) => {
+    if (req.user.avatarPublicId !== "aybdxqwunddnpp5vtqxd") await cloudinary.v2.uploader.destroy(req.user.avatarPublicId);
     await User.findByIdAndDelete(req.user.userId)
     res.status(StatusCodes.OK).json({ msg: 'user deleted' })
 }
