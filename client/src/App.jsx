@@ -2,7 +2,7 @@ import React from "react";
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { HomeLayout, Landing, Register, Login, Dashboard, Game, Profile, CurrentUserProfile, EditProfile, LookupUserProfile, FullLeaderBoard, Error } from "./pages";
+import { HomeLayout, Landing, Register, Login, Dashboard, Game, Profile, CurrentUserProfile, EditProfile, DeleteProfile, LookupUserProfile, FullLeaderBoard, Error } from "./pages";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import "bootstrap-icons/font/bootstrap-icons.css";
@@ -60,6 +60,10 @@ const router = createBrowserRouter([
                 path: 'edit-profile',
                 element: <EditProfile />,
                 action: editProfileAction(queryClient),
+              },
+              {
+                path: 'delete-profile',
+                element: <DeleteProfile />,
               },
               {
                 path: 'lookup-user',

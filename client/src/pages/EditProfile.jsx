@@ -1,5 +1,5 @@
 import React from 'react'
-import { Form, redirect, useNavigate } from 'react-router-dom';
+import { Form, Link, redirect, useNavigate } from 'react-router-dom';
 import customFetch from '../utils/customFetch';
 import { useDashboardContext } from './Dashboard'
 import { toast } from 'react-toastify';
@@ -24,16 +24,7 @@ export const action = (queryClient) => async ({ request }) => {
 }
 
 const EditProfile = () => {
-    const { user, updateUser } = useDashboardContext();
-    const navigate = useNavigate();
-
-
-    const handleDeleteUser = async () => {
-        await customFetch.delete('/users/delete-user')
-        navigate('/')
-    }
-
-
+    const { user } = useDashboardContext();
 
     return (
         <div>
@@ -60,7 +51,7 @@ const EditProfile = () => {
                     </div>
                     <div className="buttonContainer mt-4 d-flex flex-column justify-content-center">
                         <button className="btn btn-primary mb-3" type="submit" >Submit Changes</button>
-                        <button className="btn btn-danger mb-3" onClick={() => handleDeleteUser()}>Delete Profile</button>
+                        <Link to='/dashboard/profile/delete-profile' className="btn btn-danger mb-3">Delete Profile</Link>
                     </div>
                 </Form>
             </div >
