@@ -19,6 +19,7 @@ const Landing = () => {
                 </div>
                 <div className="imgContainer">
                     <img className='rounded' src="./Dice.jpg" alt="Two Red dice with a black backround." />
+                    {/* <img className='rounded' src="https://res.cloudinary.com/ddkgvictl/image/upload/v1703817576/aybdxqwunddnpp5vtqxd.jpg" alt="Two Red dice with a black backround." /> */}
                 </div>
             </div>
         </Wrapper>
