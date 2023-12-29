@@ -15,7 +15,6 @@ const GameContainer = () => {
     const [isRunning, setIsRunning] = useState(false)
     const [time, setTime] = useState(0)
     const startTimeRef = useRef(null);
-    console.log(user);
 
     useEffect(() => {
         const allHeld = dice.every((die) => die.isHeld);
